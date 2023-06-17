@@ -1,38 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace Gigachad.StateMachine
+public abstract class StateRunner<T> : MonoBehaviour where T : MonoBehaviour
 {
-    public abstract class StateRunner<T> : MonoBehaviour where T : MonoBehaviour
+    private State<T> _activeState;
+
+    public void SetState(State<T> newState)
     {
-        [SerializeField]
-        private List<State<T>> _states;
-        private State<T> _activeState;
+        if (_activeState != null)
+            _activeState.Exit();
 
-        protected virtual void Start () {
-            SetState(_states[0].GetType());
-        }
-
-        public void SetState(Type newStateType)
-        {
-            if (_activeState != null)
-                _activeState.Exit();
-
-            _activeState = _states.First(s => s.GetType() == newStateType);
-            _activeState.Init(GetComponent<T>());
-        }
-
-        private void Update()
-        {
-            _activeState.UpdateInput();
-            _activeState.Update();
-        }
-
-        private void FixedUpdate()
-        {
-            _activeState.FixedUpdate();
-        }
+        _activeState = newState;
+        _activeState.Initialize(GetComponent<T>());
     }
+
+    private void Update () => _activeState.Update();
+    private void FixedUpdate () => _activeState.FixedUpdate();
 }
