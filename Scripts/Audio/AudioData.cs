@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace FFM.Audio {
@@ -6,23 +5,23 @@ namespace FFM.Audio {
     [CreateAssetMenu(fileName = "Audiodata", menuName = "Scriptable/Audio/New Audio")]
     public class AudioData : ScriptableObject {
 
-        [BoxGroup("Settings"), HorizontalGroup("Settings/Line"), LabelWidth(90), SerializeField] 
+        [SerializeField] 
         private bool m_MultiClip = false;
         
-        [BoxGroup("Settings"), HorizontalGroup("Settings/Line"), LabelWidth(90), SerializeField] 
+        [SerializeField] 
         private bool m_RandomPitch = false;
 
 
-        [SerializeField, HideIf("m_RandomPitch"), BoxGroup("Audio")]
+        [SerializeField]
         private float m_Pitch = 1f;
 
-        [SerializeField, ShowIf("m_RandomPitch"), MinMaxSlider(-2, 2, true), BoxGroup("Audio")]
+        [SerializeField]
         private Vector2 m_PitchRange = new Vector2(-2, 2);
 
-        [SerializeField, HideIf("m_MultiClip"), BoxGroup("Audio")]
+        [SerializeField]
         private AudioClip m_Clip;
 
-        [SerializeField, ShowIf("m_MultiClip"), BoxGroup("Audio")]
+        [SerializeField]
         private AudioClip[] m_Clips;
 
 
