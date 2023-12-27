@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class SimplexNoiseGenerator {
     private int[] A = new int[3];
@@ -49,9 +48,9 @@ public class SimplexNoiseGenerator {
 		return seed;
 	}
 	
-	public float coherentNoise(float x, float y, float z, int octaves=1, int multiplier = 25, float amplitude = 0.5f, float lacunarity = 2, float persistence = 0.9f) {
+	public float coherentNoise(float x, float y, float z, int octaves=1, int multiplier = 25, float amplitude = 0.5f, float lacunarity = 2, float persistence = 0.9f, float cut=0) {
 		Vector3 v3 = new Vector3(x,y,z)/multiplier;
-		float val = 0;
+		float val = cut;
 		for (int n = 0; n < octaves; n++) {
 		  val += noise(v3.x,v3.y,v3.z) * amplitude;
 		  v3 *= lacunarity;
@@ -65,7 +64,6 @@ public class SimplexNoiseGenerator {
 		return (int)Mathf.Lerp(0,255,val);
     }
     
-    // Simplex Noise Generator
     public float noise(float x, float y, float z) {
         s = (x + y + z) * onethird;
         i = fastfloor(x + s);
