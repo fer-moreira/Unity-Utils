@@ -14,10 +14,6 @@ public class PlayerMotionState : State<PlayerRunner>
     {
     }
 
-    public override void FixedUpdate()
-    {
-    }
-
     public override void Update()
     {
     }

@@ -9,12 +9,26 @@ public abstract class StateRunner<T> : MonoBehaviour where T : MonoBehaviour
     public void SetState(State<T> newState)
     {
         if (_activeState != null)
-            _activeState.Exit();
+            _activeState.OnExit();
 
         _activeState = newState;
-        _activeState.Initialize(GetComponent<T>());
+        _activeState.OnEnter(GetComponent<T>());
     }
 
-    private void Update () => _activeState.Update();
-    private void FixedUpdate () => _activeState.FixedUpdate();
+    public virtual void ClearState () {
+        if (_activeState != null)
+            _activeState.OnExit();
+
+        _activeState = null;
+    }
+
+    protected virtual void Update() {
+        if (_activeState != null)
+            _activeState.OnUpdate();
+    }
+
+    private void FixedUpdate () {
+        if (_activeState != null)
+            _activeState.OnFixedUpdate();
+    }
 }
