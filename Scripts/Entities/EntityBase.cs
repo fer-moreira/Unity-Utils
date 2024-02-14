@@ -1,75 +1,46 @@
 using FFM.Utils;
 using Sirenix.OdinInspector;
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FFM.Entity {
-    [Flags]
-    public enum EntityHitLayer {
-        None = 0,
-        Any = Axe | Pickaxe | Sword | Arrow,
-        Axe = 1 << 0,
-        Pickaxe = 1 << 1,
-        Sword = 1 << 2,
-        Arrow = 1 << 3
-    }
+    [RequireComponent(typeof(SpriteRenderer), typeof(PolygonCollider2D), typeof(Rigidbody2D))]
+    public class EntityBase : MonoBehaviour {
 
-    [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(PolygonCollider2D))]
-    public class EntityBase : MonoBehaviour, IDamageable {
+        [SerializeField, InlineEditor]
+        protected EntityData m_EntityData;
 
-        [field: SerializeField]
-        public EntityData Data { get; private set; }
+        protected SpriteRenderer entityRenderer;
+        protected PolygonCollider2D entityCollider;
+        protected Rigidbody2D entityRigidbody;
+        protected Transform entityTransform;
 
-        [ShowInInspector, ReadOnly]
-        public int HitPoints { get; private set; }
-
-        private SpriteRenderer entityRenderer;
-        private PolygonCollider2D entityCollider;
-        private Rigidbody2D entityRigidbody;
+        public SpriteRenderer Renderer => entityRenderer;
 
         private void Awake() {
+            SetupComponents();
+        }
+
+        [Button("Setup")]
+        protected virtual void SetupComponents() {
+            gameObject.name = m_EntityData.name;
+
             entityRenderer = GetComponent<SpriteRenderer>();
             entityCollider = GetComponent<PolygonCollider2D>();
             entityRigidbody = GetComponent<Rigidbody2D>();
+            entityTransform = transform;
+
+            entityRenderer.sprite = m_EntityData.EntitySprite;
+            entityRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+
+            entityCollider.TryUpdateShapeToAttachedSprite();
+            entityCollider.isTrigger = m_EntityData.IsTrigger;
+
+            entityRigidbody.bodyType = RigidbodyType2D.Static;
+
+            gameObject.tag = m_EntityData.EntityTag;
+            gameObject.layer = m_EntityData.EntityLayer;
         }
-
-        private void Start() {
-            Refresh();
-        }
-
-        public void SetData(EntityData newData) {
-            Data = newData;
-            Refresh();
-        }
-
-        public bool IncludeLayer(EntityHitLayer layer) {
-            return (layer & Data.HitLayer) != EntityHitLayer.None;
-        }
-
-        public virtual void DoDamage(int damage) {
-            HitPoints -= damage;
-
-            if (HitPoints <= 0)
-                Destroy(this.gameObject);
-
-        }
-
-        private void Refresh() {
-            HitPoints = Data.HitPoints;
-            entityRenderer.sprite = Data.EntitySprite;
-            entityCollider.UpdateShapeToSprite(Data.EntitySprite);
-        }
-
-#if UNITY_EDITOR
-        public void GetComponents () {
-            entityRenderer = GetComponent<SpriteRenderer>();
-            entityCollider = GetComponent<PolygonCollider2D>();
-            entityRigidbody = GetComponent<Rigidbody2D>();
-        }
-#endif
-    }
-
-    public interface IDamageable {
-        public abstract void DoDamage(int damage);
     }
 }

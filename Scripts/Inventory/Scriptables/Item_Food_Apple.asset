@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b790483d98e380d40bdf41556756bdb6, type: 3}
+  m_Name: Item_Food_Apple
+  m_EditorClassIdentifier: 
+  ItemSprite: {fileID: -1277640528, guid: 00bbfa1038b8909459279e3b24ba7c3f, type: 3}
+  ItemName: Apple
+  ItemId: 1548124622
+  ItemType: 2
+  ItemFlags: 4
+  MaxDurability: 0
+  MaxStackCount: 30
+  FuelTicks: 5
+  CraftResultCount: 0
+  CraftItemCategory: 0
+  Recipe: []
+  MeltResult: {fileID: 0}

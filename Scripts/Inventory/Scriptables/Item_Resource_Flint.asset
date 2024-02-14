@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67126285a0fcba446a653aa6cdb50334, type: 3}
+  m_Name: Item_Resource_Flint
+  m_EditorClassIdentifier: 
+  ItemSprite: {fileID: -756409252, guid: 62d2e932a3b4e8743998dbb68c40348f, type: 3}
+  ItemName: Flint
+  ItemId: -952393887
+  ItemType: 0
+  ItemFlags: 4
+  MaxDurability: 0
+  MaxStackCount: 999
+  FuelTicks: 5
+  CraftResultCount: 4
+  CraftItemCategory: 4
+  Recipe:
+  - RequiredItem: {fileID: 11400000, guid: 3d23adca9dc3a334fae4b716ac702d93, type: 2}
+    RequiredCount: 1
+  MeltResult: {fileID: 0}
